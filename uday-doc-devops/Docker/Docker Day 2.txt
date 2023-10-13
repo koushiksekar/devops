@@ -1,0 +1,180 @@
+Docker Day 2:
+=============
+1.Image Amendment
+2.Dockerfile
+------------------
+
+1.Create a docker server and install docker in ubuntu server
+
+sudo -i
+apt-get update
+apt-get install docker.io
+docker pull httpd
+docker images
+
+
+Image to container:
+==================
+docker run -itd --name httpdcontainer -p "8010:80" httpd
+
+List container:
+===============
+docker ps -a
+
+Login to the container:
+=======================
+docker exec -it <cont ID> /bin/bash
+
+Container having:
+=================
+
+-Ubuntu os
+-httpd
+
+->No other packages in this container
+
+apt-get update
+apt-get install vim
+vi index.html
+i
+Docker day 2 session
+ESC+:wq!
+cat index.html
+
+-Now we install vim extra package
+
+exit
+
+Container to Image with VIM:
+============================
+
+use commit command to convert container to image
+
+docker ps -a
+docker commit <cont ID> <Image name to create> 
+docker images
+{You found new image with the increased size because it have additional package VIM}
+
+-Ubuntu
+-apache
+-VIM
+
+Backup:
+=======
+1.Local Backup => "save" command - It is available in docker server
+
+-First need to compress it
+
+# docker save -o /root/myimagebackup.tar <Image name to take local backup>
+
+o-output path to save
+myimagebackup.tar - image name to take backup file
+
+# ls
+#docker images
+
+Remove the available image
+
+#docker rmi <image name> 
+
+Launch a new image using backup file
+
+#docker load -i <tar imagefile>
+#docker images
+#ls -larth
+
+-----------------------------------------------------------------------------
+2.Cloud backup
+
+Note: Need docker hub account
+=====
+
+#docker login
+
+-username and password
+-Push always with a tag
+
+Tag:
+====
+
+#docker tag <image name to tag> dockerhub_user_name/backupname_save
+
+Push:
+=====
+
+#docker login
+-Username
+-Password
+#docker push dockerhub_user_name/backupname_save
+
+-Now navigate to docker hub and check the repositories
+-Now you can pull the image using pull command (available in docker hub)
+
+
+#docker logout (logout your docker hub in your cli)
+
+----------------------------------------------------------------------------------
+
+***********************************************************************************
+
+__-------------------------------_________________________---------________________
+
+Dockerfile:
+===========
+
+-Name should be "Dockerfile"
+-Each directory should have only one Dockerfile
+
+mkdir mydockerfile
+cd mydockerfile/
+
+vi Dockerfile - i ->
+
+FROM centos:7
+MAINTAINER Udhayakumar
+RUN yum install wget -y
+RUN yum install vim -y
+
+ESC+:wq!
+
+=> Convert Dockerfile to Docker image
+
+#docker build -t <NewImageName> . (or) /home/ubuntu
+#docker images
+
+Image to container:
+===================
+
+#docker run -itd --name vimcontainer -p "8090:80" <Image name>
+#docker exec -it <container ID> /bin/bash
+
+Rebuild:
+========
+FROM vimimage
+MAINTAINER Mohan
+RUN yum install git -y
+
+docker build -t <imagename> .
+docker run -itd --name imageamend -P  
+docker exec -it <cont id> /bin/bash
+
+-----------------------------------------------
+Timezone change for a container with python install:
+====================================================
+FROM ubuntu:18.04
+ENV TZ=Europe/Kiev
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt update && apt install -y python-pip python-dev ssh python-boto3
+
+docker build -t <imagename> .
+docker exec -it <cont id> /bin/bash
+#date
+#python --version
+#python2 --version
+#python3 --version
+
+
+ 
+
+
+

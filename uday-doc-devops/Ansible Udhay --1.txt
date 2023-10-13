@@ -1,0 +1,82 @@
+Ansible Day 1:
+==============
+Configuration management tool
+Push Mechanism
+Ansible default fs path /etc/ansible
+Host Inventory  and Ansible Configuration file
+
+pageant
+======== 
+- open-source tool download (64-bit / 32-bit)
+ppk files repository
+
+Benefits:
+=========
+-> Very Easy to Learn and implement
+-> Primary tool - adoption
+-> Open-Source
+-> On-Premises / Cloud-premises
+-> yaml / unix commands
+
+Programming Languages:
+======================
+yaml
+unix
+
+Limitations:
+============
+Master - cannot Install and runs in the Windows machine
+Single Master Configuration
+Master - Control Node
+Slaves - Managed Nodes
+
+Charteristics of Ansible:
+==========================
+Agentless Architecture
+Master - Slaves Ip =>> Host Inventory 
+Slaves - Master IP - No need to Configure
+
+4. Ansible Replacement:
+========================
+-> chef - pull
+-> puppet - pull
+-> salt - push / pull
+-> Ansible 70% Industry adoption
+
+Installation:
+=============
+Master - ansible, python
+Slaves - Python
+
+#! /bin/bash
+yum update
+yum install python-pip -y
+pip install ansible
+
+#! /bin/bash
+yum update
+yum install python-pip -y
+
+Check:
+======
+
+httpd install:
+ansible all -i hosts -m yum -a "name=httpd state=present" -b
+ansible all -i hosts -m service -a "name=httpd state=started" -b
+ansible all -i hosts -m ping
+ansible all -i hosts -a "date"
+ansible all -i hosts -a "yum install mysql -y"
+ansible all -i slaves.txt --module-name copy --args "src=/home/ec2-user/test dest=/tmp" -b
+
+Ansible config file:
+====================
+wget https://raw.githubusercontent.com/ansible/ansible/stable-2.11/examples/ansible.cfg
+
+Ansible Concepts:
+=================
+   adhoc    -  single task exec
+   Playbook -  Multitask exec
+   vault    -  Encrypt
+   roles    - offline template - bundles of an playbooks - ansible galaxy
+
+   

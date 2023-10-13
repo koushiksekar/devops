@@ -1,0 +1,36 @@
+<html>
+<head>
+    <style>
+        h1{
+           font-size: 30px;
+           background-color: #D1D0CE;
+           text-align:center;
+           padding: 15px 10px;
+           margin: 0px 100px 0px 0px
+        }
+      p{
+        font-size: 20px;
+      }
+      div{
+        background-color: #EAEEE9;
+        padding: 15px 15px;
+        margin: 0px 100px 0px 0px
+      }
+      
+    </style>
+</head>
+<body>
+     <h1>Build Details</h1>
+     <div>
+       <p><b>Jobname:<b> ${JOB_NAME}</p>
+  <p><b>Build Status:</b> ${BUILD_STATUS}</p>
+    
+    <p><b>Node Name:</b> ${NODE_NAME}</p>
+    <p><b>Build Number:</b> ${BUILD_NUMBER}</p>
+  <p><b>${BUILD_APPROVAL}:</b> ${BUILD_USER}</p>
+    <p><b>Build URL</b> ${BUILD_URL}</p>
+    <p><b>Build Console Output:</b> <a href="${BUILD_LOG}">Click here</a></p>
+  </div>
+</body>
+</html>
+

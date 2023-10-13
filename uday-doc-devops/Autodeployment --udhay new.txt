@@ -1,0 +1,63 @@
+Auto deployment in jenkins:
+===========================
+1.Launch a ubuntu 20.04 server
+2.Install jenkins
+3.Download the tomcat and install in the jenkins server
+
+# https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.89/bin/apache-tomcat-8.5.89.tar.gz
+# cd /opt/
+# wget https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.89/bin/apache-tomcat-8.5.89.tar.gz
+# tar -xvzf apache-tomcat-8.5.89.tar.gz
+# cd apache-tomcat-8.5.89.tar.gz/
+# cd bin/
+# ./startup.sh
+# cd conf/
+# vi server.xml => change the default port
+# Restart the tomcat.
+
+Now create a job in jenkins with simple shell command and build it
+
+=> Download the "Deploy to container" plugin and install it without restart
+=> Configure -> Post build actions -> deploy war/ear container
+ 
+ WAR/EAR file - **/*.war
+ Context path - sample
+ Containers: tomcat 8
+ username: deployer
+ password: deployer
+ Tomcat URL: <Jenkins public IP:9090>
+ 
+ Apply and Save
+ 
+Add Tomcat users:
+
+vi /opt/apache.xx/conf/tomcat-users.xml
+
+Add below script next to the tomcat default user
+
+<role rolename="manager-gui"/>
+   <role rolename="manager-script"/>
+   <role rolename="manager-jmx"/>
+   <role rolename="manager-status"/>
+   <user username="admin" password="admin" roles="manager-gui,manager-   script,manager-jmx,manager-status"/>
+   <user username="deployer" password="deployer" roles="manager-script"/>
+
+Save the file
+==============================================================================================================
+
+cd /webapps/manager/META-INF/
+
+vi context.xml
+ command the valve line
+  Restart the tomcat
+  
+Place the .war file in the job location
+
+Build the job
+==============================================================================================================
+Now check the application response
+
+<public Ip:9090/sample>
+================================================================================================================
+
+

@@ -1,0 +1,135 @@
+
+Docker:
+=======
+
+1.Launch a ubuntu server with ALL TCP SG.
+2.Login Docker server
+3.Convert as ROOT user and refresh the ENV.
+4.Install docker
+
+#apt-get update
+# apt-get install docker.io -y (input/output model)
+- Pull a image from docker hub
+
+#docker pull httpd [Use dockerhub]
+#docker images [List the docker images]
+#docker run -itd --name facebook -p "8010:80" httpd
+#docker ps , docker ps -a, docker container ls [To list the container]
+
+Output:
+=======
+[Public-ip]:8010
+
+#docker run -itd --name instagram -p "8020:80" httpd
+#docker run -itd --name twitter -p "8030:80" httpd
+-----------------------
+
+Login container:
+================
+
+#docker exec -it <Container-id> /bin/bash
+
+ls
+cd htdocs/
+ls
+vi index.html
+apt-get update -y
+apt-get install vim => change the content,save it and refresh the browser.
+exit
+--------------------------------------------------------------------------
+Docker Basic commands:
+---------------------
+
+1.Stop the docker container:
+
+docker ps 
+docker stop <cont id>
+docker ps -a
+
+-Now you can see the container in exited state.
+
+2.docker start <container ID>
+
+docker ps
+
+3.Container logs
+
+docker logs <container id>
+
+4.To kill the container
+
+docker kill <container ID>
+docker restart <container ID> [Container ID must to restart]
+
+5.Get the detailed properties of a container
+
+docker inspect <container ID>
+
+6.Stats
+
+docker stats <container id>
+CTRL+C to exit
+docker stop <container ID>
+docker start <container ID>
+
+7.To pause a container [resource will be utilised]
+
+docker pause <container ID>
+
+8.Unpause a container
+
+docker unpause <Container ID>
+docker stats <container ID>
+
+9.List the PID of a container
+
+docker top <container ID>
+
+PID - Process ID
+PPID - Parent Process ID
+
+10.Remove a container
+
+docker ps -a
+
+docker rm <container ID>
+
+Stop and Remove:
+================
+
+docker stop <container ID>
+docker rm <continer ID>
+
+Force remove a container:
+==========================
+
+docker rm -f <container ID>
+docker ps -a
+
+
+11.Prune [Remove all the stoped containers at a same time]
+
+docker run -its -P httpd    [Publish a port number automatically]
+docker container ls
+docker stop <container ID>
+docker ps
+
+docker container prune
+y
+
+12.Remove a docker image
+
+docker images
+docker rmi <Image ID>
+
+13.To get history of a image
+
+docker pull httpd
+docker images
+docker history <Image ID>
+
+
+
+
+
+
